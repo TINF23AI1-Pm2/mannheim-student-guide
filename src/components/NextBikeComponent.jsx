@@ -67,7 +67,7 @@ export default function ExampleComponent() {
     <View style={styles.container}>
       <View style={styles.titleContainer}>
         <Text
-          style={[styles.title, { marginBottom: !show ? 15 : 0 }]}
+          style={[styles.title, { marginBottom: !show ? 35 : 0 }]}
           onPress={() => setShow(!show)}
         >
           Nextbike Stationen:

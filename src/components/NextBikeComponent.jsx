@@ -6,6 +6,8 @@ import {
   Button,
   ActivityIndicator,
   ScrollView,
+  Modal,
+  StatusBar
 } from "react-native";
 import Card from "./Card";
 
@@ -20,6 +22,7 @@ export default function ExampleComponent() {
 
   useEffect(() => {
     const callApi = async () => {
+      // console.log("calling api");
       try {
         const response = await fetch(
           `https://mannheim.opendatasoft.com/api/explore/v2.1/catalog/datasets/free_bike_status/records?limit=${limit}&offset=${offset}`
@@ -52,13 +55,15 @@ export default function ExampleComponent() {
   };
 
   if (isLoading) {
-    return <ActivityIndicator size="large" color="#00ff00" />;//keine ahnung coolere farbe?
+    return <ActivityIndicator size="large" color={COLORS.loading} />;//keine ahnung coolere farbe?
   }
 
   if (error) {
     return (
       <View style={styles.container}>
-        <Text style={styles.error}>Error: {error}</Text>
+        <Text style={styles.error}>
+          Sorry, mate :c
+          Error: {error}</Text>
       </View>
     );
   }
@@ -67,60 +72,100 @@ export default function ExampleComponent() {
     <View style={styles.container}>
       <View style={styles.titleContainer}>
         <Text
-          style={[styles.title, { marginBottom: !show ? 35 : 0 }]}
-          onPress={() => setShow(!show)}
+          style={[styles.title, { marginBottom: !show ? 35 : 0 }]} // TODO: at the bottom cut :c
+          onPress={() => setShow(true)}
         >
           Nextbike Stationen:
         </Text>
       </View>
-      {show && (
+      {/* {show && ( */}
+      <Modal
+      animationType="fade"
+      visible={show}
+      style={styles.modal}
+      statusBarTranslucent = {false}
+      >
+      <StatusBar
+        animated={true}
+        backgroundColor={COLORS.nextbike}
+        barStyle="default"
+        // showHideTransition={statusBarTransition}
+        // hidden={hidden}
+      />
+      <View style={styles.titleContainer}>
+        <Text
+          style={styles.title}
+        >
+          Nextbike Stationen:
+        </Text>
+      </View>
         <ScrollView contentContainerStyle={{ paddingBottom: 35 }}>
           {data.map((element, index) => (
             <Card key={index} style={styles.dataElement}>
-              <Text style={styles.text}>Standort: {element.name}</Text>
+              <Text style={styles.listTxt}>Standort: {element.name}</Text>
               <Text>Ausleihbare Bikes: {element.bikes_available_to_rent ? element.bikes_available_to_rent : 0}</Text>
             </Card>
           ))}
+        </ScrollView>
           <View style={styles.buttonContainer}>
             <Button
-              title="Backshots"
+              title="<--Tom"
               onPress={handlePrevious}
               disabled={offset === 0}
-            />
+              color={COLORS.nextbike}
+              />
+              <Button
+                title="Exit"
+                onPress={() => setShow(false)}
+                color="red"
+                />
             <Button
-              title="Frontkicks"
+              title="my-->"
               onPress={handleNext}
               disabled={offset >= maxEntries - limit}
-            />
+              color={COLORS.nextbike}
+              />
           </View>
-        </ScrollView>
-      )}
+              </Modal>
+      {/* // )} */}
     </View>
   );
 }
 
+const COLORS = {
+  nextbike: "#004999",
+  loading: "#0f0f00"
+}
+
 const styles = StyleSheet.create({
+  modal: {
+    flex: 1,
+    // height: "100%",
+    backgroundColor: "white",
+  },
   container: {
     width: "100%",
     // height: "100%",
-    backgroundColor: "#004999",
+    // backgroundColor: "#004999",
+    backgroundColor: COLORS.nextbike,
     borderRadius: 20,
     marginTop: 5,
     padding: 5,
   },
   titleContainer: {
+    backgroundColor: COLORS.nextbike,
     flexDirection: "row",
     alignItems: "center",
-  },
-  dataElement: {
-    marginTop: 5,
   },
   title: {
     color: "white",
     fontSize: 32,
     fontWeight: "bold",
   },
-  text: {
+  dataElement: {
+    marginTop: 5,
+  },
+  listTxt: {
     fontWeight: "bold",
   },
   error: {

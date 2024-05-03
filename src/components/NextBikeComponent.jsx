@@ -22,7 +22,6 @@ export default function ExampleComponent() {
 
   useEffect(() => {
     const callApi = async () => {
-      // console.log("calling api");
       try {
         const response = await fetch(
           `https://mannheim.opendatasoft.com/api/explore/v2.1/catalog/datasets/free_bike_status/records?limit=${limit}&offset=${offset}`
@@ -75,7 +74,7 @@ export default function ExampleComponent() {
           style={[styles.title, { marginBottom: !show ? 35 : 0 }]} // TODO: at the bottom cut :c
           onPress={() => setShow(true)}
         >
-          Nextbike Stationen:
+          All Nextbikes:
         </Text>
       </View>
       {/* {show && ( */}

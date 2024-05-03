@@ -18,50 +18,56 @@ export default function ExampleComponent() {
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [location, setLocation] = useState(null);
-  const limit = 10;
-
-  const getLocation = async () => {
-    let { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== "granted") {
-      setErrorMsg("Permission to access location was denied");
-      return;
-    }
-
-    let location = await Location.getCurrentPositionAsync({});
-    setLocation({
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
-    });
-  };
+  const limit = 6;
 
   useEffect(() => {
-    const callApi = async () => {
-      getLocation();
-      try {
-        const response = await fetch(
-          // `https://mannheim.opendatasoft.com/api/explore/v2.1/catalog/datasets/free_bike_status/records?select=*%2C%20distance(geopunkt%2C%20GEOM'POINT(8.457751%2049.497225)')%20AS%20dist&where=bikes_available_to_rent%20IS%20NOT%20NULL&order_by=dist%20ASC&limit=3`
-          `https://mannheim.opendatasoft.com/api/explore/v2.1/catalog/datasets/free_bike_status/records?limit=${limit}
-          &select=*%2C%20distance(geopunkt%2C%20GEOM%27POINT(${location.longitude}%20${location.latitude})%27)%20AS%20dist&where=bikes_available_to_rent%20IS%20NOT%20NULL&order_by=dist%20ASC`
-        );
-        console.log(response);
-        if (!response.ok) {
-          throw new Error("RIP Response motherfcker");
-        }
-        const jsonResponse = await response.json();
-        return jsonResponse?.results;
-      } catch (error) {
-        setError(error.message);
-        return [];
-      } finally {
-        setLoading(false);
+    const fetchLocation = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setError("Location permission to your mom luk not granted");
+        return;
       }
+
+      let loc = await Location.getCurrentPositionAsync({});
+      setLocation({
+        latitude: loc.coords.latitude,
+        longitude: loc.coords.longitude,
+      });
     };
 
-    setLoading(true);
-    callApi().then((newData) => {
-      setData(newData);
-    });
+    fetchLocation();
   }, []);
+
+  useEffect(() => {
+    if (location) {
+      const fetchData = async () => {
+        try {
+          setLoading(true);
+          const response = await fetch(
+            // select=*%2C%20distance(geopunkt%2C%20GEOM'POINT(8.457751%2049.497225)')%20AS%20dist&where=bikes_available_to_rent%20IS%20NOT%20NULL&order_by=dist%20ASC&limit=3
+            `https://mannheim.opendatasoft.com/api/explore/v2.1/catalog/datasets/free_bike_status/records?
+          &select=*%2C%20distance(geopunkt%2C%20GEOM%27POINT(${location.longitude}%20${location.latitude})%27)%20AS%20dist&where=bikes_available_to_rent%20IS%20NOT%20NULL&order_by=dist%20ASC&limit=${limit}`
+          );
+          if (!response.ok) {
+            throw new Error("RIP Response motherfcker");
+          }
+          const data = await response.json();
+          setData(data?.results);
+        } catch (error) {
+          setError(error.message);
+          return [];
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchData();
+    }
+  }, []);
+
+  useEffect(() => {// only for debugging fck
+    console.log("Loading: " + isLoading);
+    console.log("Data: " + data?.results);
+  }, [isLoading]);
 
   if (isLoading) {
     return <ActivityIndicator size="large" color={COLORS.loading} />; //keine ahnung coolere farbe?
@@ -82,10 +88,9 @@ export default function ExampleComponent() {
           style={[styles.title, { marginBottom: !show ? 35 : 0 }]} // TODO: at the bottom cut :c
           onPress={() => setShow(true)}
         >
-          Nextbike Stationen:
+          Nearest Nextbikes:
         </Text>
       </View>
-      {/* {show && ( */}
       <Modal
         animationType="fade"
         visible={show}
@@ -98,7 +103,7 @@ export default function ExampleComponent() {
           barStyle="default"
         />
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Nextbike Stationen:</Text>
+          <Text style={styles.title}>Nearest Nextbikes:</Text>
         </View>
         <ScrollView contentContainerStyle={{ paddingBottom: 35 }}>
           {data.map((element, index) => (
@@ -130,13 +135,10 @@ const COLORS = {
 const styles = StyleSheet.create({
   modal: {
     flex: 1,
-    // height: "100%",
     backgroundColor: "white",
   },
   container: {
     width: "100%",
-    // height: "100%",
-    // backgroundColor: "#004999",
     backgroundColor: COLORS.nextbike,
     borderRadius: 20,
     marginTop: 5,
@@ -165,7 +167,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     marginTop: 10,
     marginBottom: 10,
   },

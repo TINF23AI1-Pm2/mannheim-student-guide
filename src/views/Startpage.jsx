@@ -6,7 +6,7 @@ import NearestNextBikeComponent from "../components/NearestNextBikeComponent";
 export default function Startpage() {
   return (
     <ScrollView style={styles.container}>
-      <ExampleComponent />
+      {/* <ExampleComponent /> */}
       <NearestNextBikeComponent />
       <NextBikeComponent />
       {/* Lis the next components here... */}

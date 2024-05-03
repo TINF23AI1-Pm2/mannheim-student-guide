@@ -64,10 +64,10 @@ export default function ExampleComponent() {
     }
   }, []);
 
-  useEffect(() => {// only for debugging fck
-    console.log("Loading: " + isLoading);
-    console.log("Data: " + data?.results);
-  }, [isLoading]);
+  // useEffect(() => {// only for debugging fck
+  //   console.log("Loading: " + isLoading);
+  //   console.log("Data: " + data?.results);
+  // }, [isLoading]);
 
   if (isLoading) {
     return <ActivityIndicator size="large" color={COLORS.loading} />; //keine ahnung coolere farbe?

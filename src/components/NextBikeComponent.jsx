@@ -21,16 +21,17 @@ export default function ExampleComponent() {
   const limit = 20;
 
   useEffect(() => {
-    const callApi = async () => {
+    const fetchData = async () => {
       try {
+        setLoading(true);
         const response = await fetch(
           `https://mannheim.opendatasoft.com/api/explore/v2.1/catalog/datasets/free_bike_status/records?limit=${limit}&offset=${offset}`
         );
         if (!response.ok) {
           throw new Error("RIP Response motherfcker");
         }
-        const jsonResponse = await response.json();
-        return jsonResponse?.results;
+        const data = await response.json();
+        setData(data?.results);
       } catch (error) {
         setError(error.message);
         return [];
@@ -38,11 +39,7 @@ export default function ExampleComponent() {
         setLoading(false);
       }
     };
-
-    setLoading(true);
-    callApi().then((newData) => {
-      setData(newData);
-    });
+    fetchData();
   }, [offset]);
 
   const handleNext = () => {

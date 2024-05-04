@@ -3,7 +3,7 @@ import ExampleComponent from "../components/ExampleComponent";
 
 export default function Startpage() {
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <ExampleComponent />
       {/* Lis the next components here... */}
     </ScrollView>
@@ -12,10 +12,7 @@ export default function Startpage() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: "#AAA",
     padding: 10,
-    paddingTop: 40,
-    borderRadius: 5,
   },
 });

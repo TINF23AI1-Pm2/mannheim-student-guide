@@ -19,7 +19,7 @@ export default function ExampleComponent() {
     <View style={styles.container}>
       <Text style={styles.title}>Hundekottütenspender</Text>
       {data?.map((element) => (
-        <View style={styles.dataElement}>
+        <View style={styles.dataElement} key={`HUNDEKOTTÜTENSPENDER_KEY_${element.standort}`}>
           <Text style={styles.text}>Standort: {element.standort}</Text>
           <Text>Koordinaten:</Text>
           <Text>lon: {element.koordinaten.lon}</Text>
@@ -34,7 +34,6 @@ export default function ExampleComponent() {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    height: "500px",
     backgroundColor: "#FAFAFA",
     marginTop: 5,
     padding: 5,

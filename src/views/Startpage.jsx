@@ -5,8 +5,8 @@ import EventsInMannheim from "../components/EventsInMannheim";
 export default function Startpage() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <ExampleComponent />
       <EventsInMannheim />
+      <ExampleComponent />
       {/* List the next components here... */}
     </ScrollView>
   );

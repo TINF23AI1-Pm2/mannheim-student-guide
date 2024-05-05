@@ -27,3 +27,42 @@ export function formatDateDE(date) {
   const year = date.getFullYear();
   return `${dayString}.${monthString}.${year}`;
 }
+
+const months = [
+  "JAN",
+  "FEB",
+  "MAR",
+  "APR",
+  "MAY",
+  "JUN",
+  "JUL",
+  "AUG",
+  "SEP",
+  "OCT",
+  "NOV",
+  "DEC",
+];
+
+/**
+ * Returns a String name for the month of the given date
+ * @param {Date} date
+ * @returns {String}
+ */
+export function getMonthDisplay(date) {
+  return months[date.getMonth()];
+}
+
+/**
+ * Parsing a date string in a german format to
+ * a js date object
+ * @param {String} dateString
+ * @returns {Date}
+ */
+export function parseToDate(dateString) {
+  const parts = dateString.split(".");
+  const day = parseInt(parts[0], 10);
+  const month = parseInt(parts[1], 10);
+  const year = parseInt(parts[2], 10);
+  const dateObject = new Date(year, month, day);
+  return dateObject;
+}

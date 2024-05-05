@@ -7,7 +7,15 @@ import { formatDateDE, trimWhitespace } from "./helper";
  * @param {string} filter.fromDate
  * @param {string} filter.toDate
  * @param {number} filter.page 
- * @returns {Promise<{id: number, name: string, description: string, date: string, time: string, place: string}[]>}
+ * @returns {Promise<{
+ *  id: number,
+*  name: string,
+*  description: string,
+*  date: string,
+*  time: string,
+*  place: string,
+*  imageLink: String
+* }[]>}
  */
 export default async function fetchEvents(filter) {
   /** Handling the filter input */
@@ -25,7 +33,15 @@ export default async function fetchEvents(filter) {
 /**
  * This function extracts data from a given html string
  * @param {String} htmlString
- * @returns {{id: number, name: string, description: string, date: string, time: string, place: string}[]}
+ * @returns {{
+ *  id: number,
+ *  name: string,
+ *  description: string,
+ *  date: string,
+ *  time: string,
+ *  place: string,
+ *  imageLink: String
+ * }[]}
  */
 function extractData(htmlString) {
   const $ = cheerio.load(htmlString);
@@ -68,6 +84,7 @@ function extractData(htmlString) {
       date: metaInfos?.[0] || "",
       time: metaInfos?.[1] || "",
       place: metaInfos?.[2] || "",
+      imageLink: `https://www.mannheim.de/${$eventElement?.find('img')?.attr('src')}`,
     });
   });
 

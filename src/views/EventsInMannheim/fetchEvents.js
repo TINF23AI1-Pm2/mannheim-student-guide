@@ -6,16 +6,16 @@ import { formatDateDE, trimWhitespace } from "./helper";
  * @param {Object} filter
  * @param {string} filter.fromDate
  * @param {string} filter.toDate
- * @param {number} filter.page 
+ * @param {number} filter.page
  * @returns {Promise<{
  *  id: number,
-*  name: string,
-*  description: string,
-*  date: string,
-*  time: string,
-*  place: string,
-*  imageLink: String
-* }[]>}
+ *  name: string,
+ *  description: string,
+ *  date: string,
+ *  time: string,
+ *  place: string,
+ *  imageLink: String
+ * }[]>}
  */
 export default async function fetchEvents(filter) {
   /** Handling the filter input */
@@ -84,7 +84,7 @@ function extractData(htmlString) {
       date: metaInfos?.[0] || "",
       time: metaInfos?.[1] || "",
       place: metaInfos?.[2] || "",
-      imageLink: `https://www.mannheim.de/${$eventElement?.find('img')?.attr('src')}`,
+      imageLink: `https://www.mannheim.de/${$eventElement?.find("img")?.attr("src")}`,
     });
   });
 

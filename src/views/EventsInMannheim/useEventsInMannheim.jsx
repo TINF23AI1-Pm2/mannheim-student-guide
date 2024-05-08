@@ -20,5 +20,5 @@ export default function useEventsInMannheim() {
     fetchNewEvents();
   }, [filter]);
 
-  return {events, loading: events === undefined, setFilter};
+  return { events, loading: events === undefined, setFilter };
 }

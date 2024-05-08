@@ -36,9 +36,7 @@ export default function EventDisplay(props) {
             <Text style={styles.text}>{event.time}</Text>
           </View>
           <View style={styles.textRow}>
-            <Text style={styles.text}>
-              {event.place.replace("\n", " ")}
-            </Text>
+            <Text style={styles.text}>{event.place.replace("\n", " ")}</Text>
           </View>
         </View>
       </View>

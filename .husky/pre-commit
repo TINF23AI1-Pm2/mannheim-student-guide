@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo '🏗️👷 Checking code styles before committing'
+
+# Check prettier standards
+npm run check:format || (
+  echo '🤢🤮🤢🤮 Its F**KING RAW - Your styling looks disgusting. 🤢🤮🤢🤮
+          Prettier Check Failed. Run "npm run format", add changes and try to commit again.';
+  false;
+)
+
+echo '✅✅✅✅ Everything seems fine... ✅✅✅✅';

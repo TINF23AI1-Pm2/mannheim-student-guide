@@ -1,5 +1,4 @@
 import { ScrollView, StyleSheet, ActivityIndicator } from "react-native";
-import Card from "../Card";
 import useEventsInMannheim from "./useEventsInMannheim";
 import EventDisplay from "./EventDisplay";
 
@@ -11,11 +10,7 @@ export default function EventsInMannheim() {
   const { events, loading } = useEventsInMannheim();
 
   if (loading) {
-    return (
-      <Card>
-        <ActivityIndicator />
-      </Card>
-    );
+    return <ActivityIndicator />;
   }
 
   return (
@@ -26,9 +21,3 @@ export default function EventsInMannheim() {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  subHeading: {
-    fontWeight: "bold",
-  },
-});

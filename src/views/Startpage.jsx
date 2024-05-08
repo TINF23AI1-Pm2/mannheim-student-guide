@@ -1,6 +1,5 @@
-import { StyleSheet, View, Text, ScrollView } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 import ExampleComponent from "../components/ExampleComponent";
-import EventsInMannheim from "../components/EventsInMannheim";
 
 export default function Startpage() {
   return (

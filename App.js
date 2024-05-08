@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import Startpage from "./src/views/Startpage";
-import EventsInMannheim from "./src/components/EventsInMannheim";
+import EventsInMannheim from "./src/views/EventsInMannheim";
 
 const Drawer = createDrawerNavigator();
 

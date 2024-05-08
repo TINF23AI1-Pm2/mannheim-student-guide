@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
   month: {
     color: "#1e3a8a",
-    fontSize: 20,  
+    fontSize: 20,
   },
   day: {
     color: "#1e3a8a",

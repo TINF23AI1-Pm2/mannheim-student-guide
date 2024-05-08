@@ -6,10 +6,10 @@ export default function Card({ children }) {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    width: "100%",
     padding: 5,
-    backgroundColor: '#FAFAFA',
+    backgroundColor: "#FAFAFA",
     borderRadius: 10,
     marginTop: 10,
-  }
+  },
 });

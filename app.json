@@ -30,7 +30,7 @@
       [
         "expo-location",
         {
-          "locationAlwaysAndWhenInUsePermission": "Diese App braucht deinen Standort $(PRODUCT_NAME) + $(name) , um deine Mutter zu klären, luk!"
+          "locationAlwaysAndWhenInUsePermission": "Ich bitte um deinen Standort, damit ich dir helfen kann. uwu!"
         }
       ]
     ]

@@ -12,7 +12,7 @@ import {
 import Card from "./Card";
 import * as Location from "expo-location";
 
-export default function ExampleComponent() {
+export default function NearestNextbikeComponent() {
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
   const [isLoading, setLoading] = useState(true);

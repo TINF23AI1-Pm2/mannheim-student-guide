@@ -95,7 +95,7 @@ export default function ExampleComponent() {
           Nextbike Stationen:
         </Text>
       </View>
-        <ScrollView contentContainerStyle={{ paddingBottom: 35 }}>
+        <ScrollView>
           {data.map((element, index) => (
             <Card key={index} style={styles.dataElement}>
               <Text style={styles.listTxt}>Standort: {element.name}</Text>

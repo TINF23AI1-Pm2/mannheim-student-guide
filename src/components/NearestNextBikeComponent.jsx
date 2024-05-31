@@ -10,6 +10,7 @@ import {
   StatusBar,
   Linking,
   Alert,
+  BackHandler,
 } from "react-native";
 import Card from "./Card";
 import * as Location from "expo-location";
@@ -38,6 +39,21 @@ export default function ExampleComponent() {
   
     return <Button title={children} onPress={handlePress} />;
   };
+
+  useEffect(() => {
+    const backAction = () => {
+      console.log("backaction");
+      if (show) {
+        setShow(false);
+        return true; // Prevent default behavior (closing the app)
+      }
+      return false;
+    };
+
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+    console.log("useEffect");
+    return () => backHandler.remove();
+  }, [show]);
 
   useEffect(() => {
     const fetchLocation = async () => {
@@ -99,7 +115,7 @@ export default function ExampleComponent() {
     <View style={styles.container}>
       <View style={styles.titleContainer}>
         <Text
-          style={[styles.title, { marginBottom: !show ? 35 : 0 }]} // TODO: at the bottom cut :c
+          style={[styles.title]} // TODO: at the bottom cut :c
           onPress={() => setShow(true)}
         >
           Nearest Nextbikes:

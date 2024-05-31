@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState , useCallback} from "react";
 import {
   View,
   Text,
@@ -8,6 +8,8 @@ import {
   ScrollView,
   Modal,
   StatusBar,
+  Linking,
+  Alert,
 } from "react-native";
 import Card from "./Card";
 import * as Location from "expo-location";
@@ -19,6 +21,23 @@ export default function ExampleComponent() {
   const [error, setError] = useState(null);
   const [location, setLocation] = useState(null);
   const limit = 6;
+
+  const OpenNextbikeStation = ({ stationId, children }) => {
+    const handlePress = useCallback(async () => {
+      const extras = [
+        { key: 'station_id', value: stationId }
+      ];
+      try {
+        // Angenommen, 'de.nextbike.intent.action.OPEN_STATION' ist die Action, um eine Station zu öffnen.
+        // await Linking.sendIntent('de.nextbike.intent.action.OPEN_STATION', extras);
+        await Linking.sendIntent('de.nextbike');
+      } catch (e) {
+        Alert.alert('Fehler', e.message);
+      }
+    }, [stationId]);
+  
+    return <Button title={children} onPress={handlePress} />;
+  };
 
   useEffect(() => {
     const fetchLocation = async () => {
@@ -112,6 +131,9 @@ export default function ExampleComponent() {
               </Text>
             </Card>
           ))}
+          <OpenNextbikeStation stationId="1234">
+            Öffne Station 1234
+          </OpenNextbikeStation>
         </ScrollView>
         <View style={styles.buttonContainer}>
           <Button title="Exit" onPress={() => setShow(false)} color="red" />
